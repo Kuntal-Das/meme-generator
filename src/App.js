@@ -1,25 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import Header from "./components/Header";
+import MemeGenerator from "./components/MemeGenerator";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+    constructor() {
+        super()
+        this.jokesApiUrl = "https://official-joke-api.appspot.com/jokes/random"
+
+        this.state = {
+            imgUrl: "",
+            topText: "",
+            bottomText: "",
+        }
+    }
+
+    getRandomJoke = async () => {
+        const res = await fetch(this.jokesApiUrl);
+        const data = await res.json();
+
+        return data;
+    }
+
+    componentDidMount() {
+        const joke = this.getRandomJoke()
+        console.log(joke)
+    }
+
+    render = () => (
+        <div className="app">
+            <Header />
+            <MemeGenerator {...this.state} />
+        </div>
+    );
 }
 
-export default App;
+export default App
