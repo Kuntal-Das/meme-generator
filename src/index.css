@@ -3,17 +3,16 @@
 }
 
 body {
-  margin    : 0;
-  padding   : 0;
-  min-height: 100vh;
-}
-
-.app {
-  font-family: sans-serif;
+  margin          : 0;
+  padding         : 0;
+  min-height      : 100vh;
+  background-color: #e1e1e1;
 }
 
 img {
-  max-width: 100%;
+  max-width : 100%;
+  max-height: 70vh;
+  object-fit: cover;
 }
 
 .header {
@@ -40,15 +39,87 @@ img {
 }
 
 .main-grid {
-  display: grid;
+  display    : grid;
+  grid-gap   : 1em;
+  align-items: center;
+
   grid-template-columns:
-    minmax(1em, 1fr) repeat(2, minmax(100px, 300px)) minmax(1em, 1fr);
+    minmax(1em, 1fr) minmax(200px, 550px) minmax(1em, 1fr);
 }
 
-.meme-img {
+.meme {
+  display    : grid;
+  place-items: center;
   grid-column: 2;
+  position   : relative;
+  margin     : 2.5em 0;
+}
+
+.top-text,
+.bottom-text {
+
+  position      : absolute;
+  display       : block;
+  width         : 100%;
+  text-align    : center;
+  font-family   : impact, sans-serif;
+  font-size     : 1.45em;
+  text-transform: uppercase;
+  color         : white;
+  letter-spacing: 1px;
+  text-shadow   :
+    2px 2px 0 #000,
+    -2px -2px 0 #000,
+    2px -2px 0 #000,
+    -2px 2px 0 #000,
+    0 2px 0 #000,
+    2px 0 0 #000,
+    0 -2px 0 #000,
+    -2px 0 0 #000,
+    2px 2px 5px #000;
+}
+
+.top-text {
+  top: -1em;
+}
+
+.bottom-text {
+  bottom: -1em;
 }
 
 .meme-form {
-  grid-column: 3;
+  grid-column: 2;
+  display    : grid;
+  grid-gap   : 1em;
+  margin     : 2.5em 0;
+}
+
+.font-btn {
+  justify-self : center;
+  cursor       : pointer;
+  padding      : 0.5em 2.25em;
+  border-radius: 5px;
+  font-family  : inherit;
+  border       : 2px solid transparent;
+}
+
+.font-btn:hover,
+.font-btn:focus {
+  border-color: black;
+}
+
+.txt-input {
+  padding: 0.5em;
+}
+
+@media (min-width:600px) {
+  .main-grid {
+    grid-template-columns:
+      minmax(1em, 1fr) repeat(2, minmax(250px, 450px)) minmax(1em, 1fr);
+    grid-column-gap: 5em;
+  }
+
+  .meme-form {
+    grid-column: 3;
+  }
 }
