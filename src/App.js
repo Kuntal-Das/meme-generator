@@ -32,22 +32,6 @@ class App extends React.Component {
         return data.memes;
     }
 
-    componentDidMount() {
-        // this.setState({ isLoading: true });
-        Promise.all([
-            this.getRandomJoke().catch(err => console.error(err)),
-            this.getMemeImgs().catch(err => console.error(err))
-        ]).then(([jokeData, imgUrls]) => {
-            this.setState({
-                topText: jokeData.setup,
-                bottomText: jokeData.punchline,
-                imgUrl: imgUrls[Math.floor(Math.random() * imgUrls.length)].url,
-                imgs: imgUrls,
-            });
-            this.setState({ isLoading: false });
-        });
-    }
-
     setRandomImg = () => {
         const randIndx = Math.floor(Math.random() * this.state.imgs.length)
         this.setState({ imgUrl: this.state.imgs[randIndx].url })
@@ -68,21 +52,38 @@ class App extends React.Component {
             });
     }
 
+    componentDidMount = () => {
+        Promise.all([
+            this.getRandomJoke().catch(err => console.error(err)),
+            this.getMemeImgs().catch(err => console.error(err))
+        ]).then(([jokeData, imgUrls]) => {
+            this.setState({
+                topText: jokeData.setup,
+                bottomText: jokeData.punchline,
+                imgUrl: imgUrls[Math.floor(Math.random() * imgUrls.length)].url,
+                imgs: imgUrls,
+            });
+            this.setState({ isLoading: false });
+        });
+    }
+
     render = () => {
-        if (this.state.isLoading) {
-            return <Loading />
-        }
         return (
             <div style={{
                 minHeight: "75vh", position: "relative"
             }}>
                 <Header />
-                <MemeGenerator
-                    {...this.state}
-                    getNewImage={this.setRandomImg}
-                    getNewJoke={this.setRandomJoke}
-                    handelChange={this.handelChange}
-                />
+                {
+                    (this.state.isLoading) ?
+                        <Loading />
+                        :
+                        <MemeGenerator
+                            {...this.state}
+                            getNewImage={this.setRandomImg}
+                            getNewJoke={this.setRandomJoke}
+                            handelChange={this.handelChange}
+                        />
+                }
             </div >
         )
     }
