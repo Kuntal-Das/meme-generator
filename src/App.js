@@ -1,4 +1,5 @@
 import React from "react";
+import Loading from "./components/Loading";
 import Header from "./components/Header";
 import MemeGenerator from "./components/MemeGenerator";
 
@@ -12,7 +13,8 @@ class App extends React.Component {
             topText: "",
             bottomText: "",
             imgUrl: "",
-            imgs: []
+            imgs: [],
+            isLoading: true,
         }
     }
 
@@ -31,6 +33,7 @@ class App extends React.Component {
     }
 
     componentDidMount() {
+        // this.setState({ isLoading: true });
         Promise.all([
             this.getRandomJoke().catch(err => console.error(err)),
             this.getMemeImgs().catch(err => console.error(err))
@@ -42,6 +45,7 @@ class App extends React.Component {
                 imgs: imgUrls,
             });
         });
+        this.setState({ isLoading: false });
     }
 
     setRandomImg = () => {
@@ -64,17 +68,24 @@ class App extends React.Component {
             });
     }
 
-    render = () => (
-        <div className="app">
-            <Header />
-            <MemeGenerator
-                {...this.state}
-                getNewImage={this.setRandomImg}
-                getNewJoke={this.setRandomJoke}
-                handelChange={this.handelChange}
-            />
-        </div>
-    );
+    render = () => {
+        if (this.state.isLoading) {
+            return <Loading />
+        }
+        return (
+            <div style={{
+                minHeight: "75vh", position: "relative"
+            }}>
+                <Header />
+                <MemeGenerator
+                    {...this.state}
+                    getNewImage={this.setRandomImg}
+                    getNewJoke={this.setRandomJoke}
+                    handelChange={this.handelChange}
+                />
+            </div >
+        )
+    }
 }
 
 export default App
