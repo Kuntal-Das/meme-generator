@@ -116,11 +116,11 @@ img {
   padding: 0.5em;
 }
 
-@media (min-width:600px) {
+@media (min-width:650px) {
   .main-grid {
     grid-template-columns:
-      minmax(1em, 1fr) repeat(2, minmax(250px, 450px)) minmax(1em, 1fr);
-    grid-column-gap: 5em;
+      minmax(0em, 1fr) repeat(2, minmax(250px, 450px)) minmax(0em, 1fr);
+    grid-column-gap: 3em;
   }
 
   .meme-form {
