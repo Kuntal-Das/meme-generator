@@ -10,11 +10,11 @@ class App extends React.Component {
         this.memeImgApiUrl = "https://api.imgflip.com/get_memes"
 
         this.state = {
+            isLoading: true,
             topText: "",
             bottomText: "",
             imgUrl: "",
             imgs: [],
-            isLoading: true,
         }
     }
 
@@ -44,8 +44,8 @@ class App extends React.Component {
                 imgUrl: imgUrls[Math.floor(Math.random() * imgUrls.length)].url,
                 imgs: imgUrls,
             });
+            this.setState({ isLoading: false });
         });
-        this.setState({ isLoading: false });
     }
 
     setRandomImg = () => {
